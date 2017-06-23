@@ -19,10 +19,20 @@ Vagrant.configure("2") do |config|
   # npm install - succeeds
   # node server.js - succeeds
   # curl http://localhost:3000 - succeeds
-  config.vm.provision "shell", inline: <<-SHELL
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-apt-get -y install nodejs
-SHELL
+#   config.vm.provision "shell", inline: <<-SHELL
+# curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+# apt-get -y install nodejs
+# SHELL
 
+
+  # This will install Node v4.8.3 and npm v2.15.11
+  # https://stackoverflow.com/questions/16898001/installing-a-specific-node-version-in-ubuntu
+  # The download link below is from:
+  # https://deb.nodesource.com/node_4.x/pool/main/n/nodejs/
+  config.vm.provision "shell", inline: <<-SHELL
+curl -s -O https://deb.nodesource.com/node_4.x/pool/main/n/nodejs/nodejs_4.8.3-1nodesource1~trusty1_amd64.deb
+apt-get install rlwrap -y
+dpkg -i nodejs_4.8.3-1nodesource1~trusty1_amd64.deb
+SHELL
 
 end
